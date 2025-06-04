@@ -22,6 +22,8 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                 <th>Full Name</th>
                                 <th>Gender</th>
                                 <th>Education</th>
+                                <th>Phone</th>
+
                                 <th></th>
                             </tr>
                         </thead>
@@ -32,11 +34,13 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                     <td><?php echo $row['name'] ?></td>
                                     <td><?php echo $row['gender'] == 1 ? 'Laki-laki' : 'Perempuan' ?></td>
                                     <td><?php echo $row['education'] ?></td>
+                                    <td><?php echo $row['phone'] ?></td>
 
                                     <td>
+                                        <a href="?page=tambah-instructor-major&id=<?php echo $row['id'] ?>" class="btn btn-warning">Add Major</a>
                                         <a href="?page=tambah-instructor&edit=<?php echo $row['id'] ?>" class="btn btn-primary">edit</a>
                                         <a onclick="return confirm('Are You Sure Wanna Delete this Data??')" href="?page=tambah-instructor&delete=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a>
-                                        <a href="?page=instructor$detail" class="btn btn-success">Detail</a>
+                                        
                                     </td>
                                 </tr>
 

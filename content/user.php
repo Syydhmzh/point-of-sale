@@ -21,7 +21,7 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                 <th>No</th>
                                 <th>Full Name</th>
                                 <th>Email</th>
-                                <th></th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,7 +31,7 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                 <td><?php echo $row['name'] ?></td>
                                 <td><?php echo $row['email'] ?></td>                             
                                 <td>
-                                    <a href="?page=tambah-user&edit=<?php echo $row['id']?>" class="btn btn-primary">edit</a>
+                                    <a  href="?page=tambah-user&edit=<?php echo $row['id']?>" class="btn btn-primary">edit</a>
                                     <a onclick="return confirm('Are You Sure Wanna Delete this Data??')" href="?page=tambah-user&delete=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>

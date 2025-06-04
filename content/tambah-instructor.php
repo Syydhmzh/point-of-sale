@@ -42,7 +42,7 @@ if (isset($_POST['name'])) {
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Add Instructors</h5>
+                <h5 class="card-title"><?php echo isset($_GET['edit']) ? 'Edit' : 'Add' ?> Instructors</h5>
                 <form action="" method="POST">
                     <div class="mb-3">
                         <label for="">Fullname *</label>
