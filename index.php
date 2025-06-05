@@ -1,20 +1,29 @@
-<?php 
+<?php
 // $_SESSION, $_POST, $_GET, $_FILES, $_SERVER, $_ENV, $_REQUEST
 
 session_start();
 include 'config/koneksi.php';
 
-if(isset($_POST['email'])){
+if (isset($_POST['email'])) {
     $email = $_POST['email'];
     $password = sha1($_POST['password']);
+    $role = $_POST['role'];
 
 
     // tampilkan semua data dari tabel user dimana emailnya diambil dari 
     // orang yang input email dan password diambil dari orang yang input password
-    $querylogin = mysqli_query($config, "SELECT * FROM users WHERE email = '$email' AND password = '$password'");
+
+    //jika login dengan role instruktur
+    if ($role == 1) {
+        $querylogin = mysqli_query($config, "SELECT * FROM instructors WHERE email = '$email' AND password = '$password'");
+    } else {
+        $querylogin = mysqli_query($config, "SELECT * FROM users WHERE email = '$email' AND password = '$password'");
+    }
+
+
 
     // jika data ditemukan, mysqli_num_rows("hasil query") 
-    if(mysqli_num_rows($querylogin) > 0){
+    if (mysqli_num_rows($querylogin) > 0) {
         //header("location:namafile.php" ): meredirect / melempar ke halaman lain 
         $rowlogin = mysqli_fetch_assoc($querylogin);
         $_SESSION['ID_USER'] = $rowlogin['id'];
@@ -24,7 +33,6 @@ if(isset($_POST['email'])){
     } else {
         header("location:index.php?login=error");
     }
-
 }
 
 
@@ -113,6 +121,17 @@ if(isset($_POST['email'])){
                                         <div class="col-12">
                                             <label for="yourPassword" class="form-label">Password</label>
                                             <input type="password" name="password" class="form-control" id="yourPassword" required>
+                                            <div class="invalid-feedback">Please enter your password!</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourRole" class="form-label">Role</label>
+                                            <select name="role" id="yourRole" class="form-control">
+                                                <option value="">Pilih Role</option>
+                                                <option value="1">Instruktur</option>
+                                                <option value="2">Siswa</option>
+                                                <option value="3">Lainnya</option>
+
+                                            </select>
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
 

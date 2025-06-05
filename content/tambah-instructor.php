@@ -17,17 +17,19 @@ if (isset($_POST['name'])) {
     //tambah data baru / insert
     $name = $_POST['name'];
     $gender = $_POST['gender'];
+    // $gender = $_POST['gender'];
     $education = $_POST['education'];
     $phone = $_POST['phone'];
     $email = $_POST['email'];
+    $password = isset($_POST['password']) ? sha1($_POST['password']) : $rowedit['password'];
     $address = $_POST['address'];
     $id_user = isset($_GET['edit']) ? $_GET['edit'] : '';
 
     if (!isset($_GET['edit'])) {
-        $insert = mysqli_query($config, "INSERT INTO instructors (name, gender, education, phone, email, address ) VALUES ('$name','$gender', '$education', '$phone', '$email', '$address')");
+        $insert = mysqli_query($config, "INSERT INTO instructors (name, gender, education, phone, email, password address ) VALUES ('$name','$gender', '$education', '$phone', '$email', '$password', '$address')");
         header("location:?page=instructor&tambah=berhasil");
     } else {
-        $update = mysqli_query($config, "UPDATE instructors SET name='$name', email='$email',  WHERE id='$id_user'");
+        $update = mysqli_query($config, "UPDATE instructors SET name='$name',  gender='$gender', education='$education', phone='$phone', email='$email', password='$password' WHERE id='$id_user'");
         header("location:?page=instructor&ubah=berhasil");
     }
 }
@@ -51,8 +53,8 @@ if (isset($_POST['name'])) {
                     <div class="mb-3">
                         <label for="">gender *</label>
                         <div class="col-sm-10">
-                            <input type="radio" name="gender" value="1" <?= isset($_GET['edit']) ? $rowedit['gender'] ? 'checked' : "" : "" ?>>Laki-laki
-                            <input type="radio" name="gender" value="0" <?= isset($_GET['edit']) ? $rowedit['gender'] ? 'checked' : "" : "" ?>>Perempuan
+                            <input type="radio" name="gender" value="1" <?= isset($_GET['edit']) && $rowedit['gender'] == '1' ? 'checked' : ''  ?>>Laki-laki
+                            <input type="radio" name="gender" value="0" <?= isset($_GET['edit']) && $rowedit['gender'] == '0' ? 'checked' : ''  ?>>Perempuan
                         </div>
                     </div>
                     <div class="mb-3">
@@ -66,6 +68,13 @@ if (isset($_POST['name'])) {
                     <div class="mb-3">
                         <label for="">Email *</label>
                         <input type="email" class="form-control" name="email" placeholder="Enter your email" value="<?= isset($_GET['edit']) ? $rowedit['email'] : "" ?> " required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="">Password *</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter your password" <?php echo empty($_GET['edit']) ? 'required' : '' ?>>
+                        <small>
+                            )* if you want to change your password, you can fill this field
+                        </small>
                     </div>
                     <div class="mb-3">
                         <label for="">Address *</label>
