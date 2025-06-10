@@ -26,7 +26,7 @@ if (isset($_POST['name'])) {
     $id_user = isset($_GET['edit']) ? $_GET['edit'] : '';
 
     if (!isset($_GET['edit'])) {
-        $insert = mysqli_query($config, "INSERT INTO instructors (name, gender, education, phone, email, password address ) VALUES ('$name','$gender', '$education', '$phone', '$email', '$password', '$address')");
+        $insert = mysqli_query($config, "INSERT INTO instructors (name, gender, education, phone, email, password, address ) VALUES ('$name','$gender', '$education', '$phone', '$email', '$password', '$address')");
         header("location:?page=instructor&tambah=berhasil");
     } else {
         $update = mysqli_query($config, "UPDATE instructors SET name='$name',  gender='$gender', education='$education', phone='$phone', email='$email', password='$password' WHERE id='$id_user'");

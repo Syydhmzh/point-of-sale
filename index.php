@@ -16,10 +16,11 @@ if (isset($_POST['email'])) {
     //jika login dengan role instruktur
     if ($role == 1) {
         $querylogin = mysqli_query($config, "SELECT * FROM instructors WHERE email = '$email' AND password = '$password'");
-    } else {
+    } elseif ($role == 2){
+     $querylogin = mysqli_query($config, "SELECT * FROM students WHERE email = '$email' AND password = '$password'");
+    }else {
         $querylogin = mysqli_query($config, "SELECT * FROM users WHERE email = '$email' AND password = '$password'");
     }
-
 
 
     // jika data ditemukan, mysqli_num_rows("hasil query") 
@@ -28,6 +29,8 @@ if (isset($_POST['email'])) {
         $rowlogin = mysqli_fetch_assoc($querylogin);
         $_SESSION['ID_USER'] = $rowlogin['id'];
         $_SESSION['NAME'] = $rowlogin['name'];
+        $_SESSION['ID_ROLE'] = $role;
+        
 
         header("location:home.php");
     } else {
