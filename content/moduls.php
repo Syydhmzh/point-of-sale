@@ -29,7 +29,7 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                 <div class="mb-3" align="right">
                     <a href="?page=tambah-modul" class="btn btn-primary">Add Modul</a>
                 </div>
-
+                <?php endif ?>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
