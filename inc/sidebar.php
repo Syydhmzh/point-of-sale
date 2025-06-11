@@ -1,55 +1,59 @@
-    
-    <!-- ===== Sidebar ===== -->
-    <aside id="sidebar" class="sidebar">
+<?php
+$querymainmenu = mysqli_query($config, "SELECT * FROM menus WHERE parent_id = 0 OR parent_id=''");
+$rowmainmenu = mysqli_fetch_all($querymainmenu, MYSQLI_ASSOC);
 
-        <ul class="sidebar-nav" id="sidebar-nav">
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="index.html">
-                    <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li><!-- End Dashboard Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="?page=instructor">
-                            <i class="bi bi-circle"></i><span>instructors</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?page=major">
-                            <i class="bi bi-circle"></i><span>Major</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?page=role">
-                            <i class="bi bi-circle"></i><span>Role</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="?page=user">
-                            <i class="bi bi-circle"></i><span>User</span>
-                        </a>
-                    </li>
-                    
-                </ul>
-            </li><!-- End Components Nav -->
+?>
 
 
+<!-- ===== Sidebar ===== -->
+<aside id="sidebar" class="sidebar">
 
-            <li class="nav-heading">Transaction</li>
+    <ul class="sidebar-nav" id="sidebar-nav">
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="?page=moduls">
-                    <i class="bi bi-book"></i>
-                    <span>Moduls</span>
-                </a>
-            </li><!-- End Profile Page Nav -->
-        </ul>
+        <!-- <li class="nav-item">
+            <a class="nav-link collapsed" href="home.php">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li> -->
+        <?php foreach ($rowmainmenu as $mainmenu): ?>
+            <?php
+            $id_menu = $mainmenu['id'];
+            $querysubmenu = mysqli_query($config, "SELECT * FROM menus WHERE parent_id = '$id_menu' ORDER BY urutan ASC ");
+            // $rowsubmenu = mysqli_fetch_all($querysubmenu, MYSQLI_ASSOC);
+            ?>
 
-    </aside><!-- End Sidebar-->
+            <?php if (mysqli_num_rows($querysubmenu) > 0): ?>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#menu-<?php echo $mainmenu['id'] ?>" data-bs-toggle="collapse" href="#">
+                        <i class="<?php echo $mainmenu['icon'] ?>"></i><span><?php echo $mainmenu['name'] ?></span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="menu-<?php echo $mainmenu['id'] ?>" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <?php while ($rowsubmenu = mysqli_fetch_assoc($querysubmenu)): ?>
+                            <li>
+                                <a href="?page=<?php echo $rowsubmenu['url'] ?>">
+                                    <i class="<?php echo $rowsubmenu['icon'] ?>"></i><span><?php echo $rowsubmenu['name'] ?></span>
+                                </a>
+                            </li>
+                        <?php endwhile; ?>
+                    </ul>
+                </li>
+                <!-- End Components Nav -->
+            <?php elseif (!empty($mainmenu['url'])): ?>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="<?php echo $mainmenu['url'] ?>">
+                        <i class="<?php echo $mainmenu['icon'] ?>"></i>
+                        <span><?php echo $mainmenu['name'] ?></span>
+                    </a>
+                </li>
+
+            <?php endif; ?>
+
+        <?php endforeach; ?>
+
+
+
+
+    </ul>
+
+</aside><!-- End Sidebar-->

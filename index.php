@@ -14,11 +14,14 @@ if (isset($_POST['email'])) {
     // orang yang input email dan password diambil dari orang yang input password
 
     //jika login dengan role instruktur
-    if ($role == 1) {
+    if ($role == 3) {
         $querylogin = mysqli_query($config, "SELECT * FROM instructors WHERE email = '$email' AND password = '$password'");
-    } elseif ($role == 2){
-     $querylogin = mysqli_query($config, "SELECT * FROM students WHERE email = '$email' AND password = '$password'");
-    }else {
+    
+
+    } elseif ($role == 5) {
+        $querylogin = mysqli_query($config, "SELECT * FROM students WHERE email = '$email' AND password = '$password'");
+        
+    } else {
         $querylogin = mysqli_query($config, "SELECT * FROM users WHERE email = '$email' AND password = '$password'");
     }
 
@@ -30,13 +33,18 @@ if (isset($_POST['email'])) {
         $_SESSION['ID_USER'] = $rowlogin['id'];
         $_SESSION['NAME'] = $rowlogin['name'];
         $_SESSION['ID_ROLE'] = $role;
-        
+
 
         header("location:home.php");
     } else {
         header("location:index.php?login=error");
     }
 }
+
+$queryroles = mysqli_query($config, "SELECT * FROM roles
+WHERE name IN ('instruktur', 'Students')
+ORDER BY id DESC");
+$rowroles = mysqli_fetch_all($queryroles, MYSQLI_ASSOC);
 
 
 ?>
@@ -130,9 +138,12 @@ if (isset($_POST['email'])) {
                                             <label for="yourRole" class="form-label">Role</label>
                                             <select name="role" id="yourRole" class="form-control">
                                                 <option value="">Pilih Role</option>
-                                                <option value="1">Instruktur</option>
-                                                <option value="2">Siswa</option>
-                                                <option value="3">Lainnya</option>
+                                                <?php foreach ($rowroles as $role): ?>
+                                                    <option value="<?php echo $role['id'] ?>"><?php echo $role['name'] ?></option>
+                                                <?php endforeach ?>
+                                                <!-- <option value="1">Instruktur</option>
+                                                    <option value="2">Siswa</option>
+                                                    <option value="3">Lainnya</option> -->
 
                                             </select>
                                             <div class="invalid-feedback">Please enter your password!</div>
