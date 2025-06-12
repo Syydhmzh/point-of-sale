@@ -13,8 +13,8 @@ $query = mysqli_query($config, "SELECT majors.name as major_name, instructors.na
 FROM moduls 
 LEFT JOIN majors ON majors.id = moduls.id_major
 LEFT JOIN instructors ON instructors.id = moduls.id_instructor
-$where
--- WHERE moduls.id_instructor='$id_user'
+
+WHERE moduls.id_instructor='$id_user'
 ORDER BY moduls.id DESC");
 $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 ?>

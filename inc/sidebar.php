@@ -1,5 +1,10 @@
 <?php
-$querymainmenu = mysqli_query($config, "SELECT * FROM menus WHERE parent_id = 0 OR parent_id=''");
+$id_roles = isset($_SESSION['ID_ROLE']) ? $_SESSION['ID_ROLE'] : '';
+$querymainmenu = mysqli_query($config, "SELECT DISTINCT menus.*  FROM menus
+JOIN menu_roles ON menus.id = menu_roles.id_menus
+JOIN roles ON roles.id = menu_roles.id_roles
+WHERE menu_roles.id_roles = '$id_roles' AND
+parent_id = 0 OR parent_id=''");
 $rowmainmenu = mysqli_fetch_all($querymainmenu, MYSQLI_ASSOC);
 
 ?>
@@ -19,7 +24,11 @@ $rowmainmenu = mysqli_fetch_all($querymainmenu, MYSQLI_ASSOC);
         <?php foreach ($rowmainmenu as $mainmenu): ?>
             <?php
             $id_menu = $mainmenu['id'];
-            $querysubmenu = mysqli_query($config, "SELECT * FROM menus WHERE parent_id = '$id_menu' ORDER BY urutan ASC ");
+            $querysubmenu = mysqli_query($config, "SELECT DISTINCT menus.* FROM menus 
+            JOIN menu_roles ON menus.id = menu_roles.id_menus
+            JOIN roles ON roles.id = menu_roles.id_roles
+            WHERE menu_roles.id_roles = '$id_roles' AND
+            parent_id = '$id_menu' ORDER BY urutan ASC ");
             // $rowsubmenu = mysqli_fetch_all($querysubmenu, MYSQLI_ASSOC);
             ?>
 
