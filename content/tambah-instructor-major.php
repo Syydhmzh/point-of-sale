@@ -6,7 +6,7 @@ if (isset($_GET['delete'])) {
     // print_r($id);
     // die;
 
-    $querydelete = mysqli_query($config, "DELETE FROM instructor_majors  WHERE id = '$id_instructor_major'");
+    $querydelete = mysqli_query($config, "DELETE FROM user_roles  WHERE id = '$id'");
     if ($querydelete) {
         header("location:?page=tambah-instructor-major&id=" . $id_instructor . "&hapus=berhasil");
     } else {
@@ -15,7 +15,7 @@ if (isset($_GET['delete'])) {
 }
 
 $edit = isset($_GET['edit']) ? $_GET['edit'] : '';
-$queryedit = mysqli_query($config, "SELECT * FROM instructor_majors WHERE id='$edit'");
+$queryedit = mysqli_query($config, "SELECT * FROM user_roles WHERE id='$edit'");
 $rowedit = mysqli_fetch_assoc($queryedit);
 
 $id_instructor = isset($_GET['id']) ? $_GET['id'] : '';

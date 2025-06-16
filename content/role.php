@@ -1,5 +1,5 @@
 <?php
-$query = mysqli_query($config, "SELECT * FROM roles WHERE deleted_at = 0 ORDER BY id DESC");
+$query = mysqli_query($config, "SELECT * FROM roles  ORDER BY id DESC");
 $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 ?>
 

@@ -103,27 +103,17 @@ if (isset($_POST['save'])) {
                         </div>
                     </form>
 
-                <?php elseif (isset($_GET['edit'])):  ?>
+                <?php else:   ?>
                     <form action="" method="POST">
                         <div class="mb-3">
                             <label for="">Role *</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter your name" value="<?= isset($_GET['edit']) ? $rowedit['name'] : "" ?>" required>
                         </div>
                         <div class="mb-3">
-                            <input type="submit" class="btn btn-success" name="save" value="save">
+                            <input type="submit" class="btn btn-success" name="simpan" value="save">
                         </div>
                     </form>
-                <?php else: ?>
-                    <form action="" method="POST">
-                        <div class="mb-3">
-                            <label for="">Role *</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter your name" value="<?= isset($_GET['edit']) ? $rowedit['name'] : "" ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="submit" class="btn btn-success" name="save" value="save">
-                        </div>
-                    </form>
-
+                
                 <?php endif; ?>
 
             </div>

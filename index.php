@@ -14,16 +14,8 @@ if (isset($_POST['email'])) {
     // orang yang input email dan password diambil dari orang yang input password
 
     //jika login dengan role instruktur
-    if ($role == 3) {
-        $querylogin = mysqli_query($config, "SELECT * FROM instructors WHERE email = '$email' AND password = '$password'");
     
-
-    } elseif ($role == 5) {
-        $querylogin = mysqli_query($config, "SELECT * FROM students WHERE email = '$email' AND password = '$password'");
-        
-    } else {
-        $querylogin = mysqli_query($config, "SELECT * FROM users WHERE email = '$email' AND password = '$password'");
-    }
+    $querylogin = mysqli_query($config, "SELECT * FROM users WHERE email = '$email' AND password = '$password'");
 
 
     // jika data ditemukan, mysqli_num_rows("hasil query") 
@@ -41,10 +33,6 @@ if (isset($_POST['email'])) {
     }
 }
 
-$queryroles = mysqli_query($config, "SELECT * FROM roles
-WHERE name IN ('instruktur', 'Students')
-ORDER BY id DESC");
-$rowroles = mysqli_fetch_all($queryroles, MYSQLI_ASSOC);
 
 
 ?>
@@ -59,7 +47,7 @@ $rowroles = mysqli_fetch_all($queryroles, MYSQLI_ASSOC);
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>LMS | PPKD Jakarta Pusat</title>
+    <title>Point Of Sales </title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -105,7 +93,7 @@ $rowroles = mysqli_fetch_all($queryroles, MYSQLI_ASSOC);
                             <div class="d-flex justify-content-center py-4">
                                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                                     <img src="assets/img/logo.png" alt="">
-                                    <span class="d-none d-lg-block">LMS PPKD Jakpus</span>
+                                    <span class="d-none d-lg-block">Point Of Sales</span>
                                 </a>
                             </div><!-- End Logo -->
 
@@ -134,22 +122,9 @@ $rowroles = mysqli_fetch_all($queryroles, MYSQLI_ASSOC);
                                             <input type="password" name="password" class="form-control" id="yourPassword" required>
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
-                                        <div class="col-12">
-                                            <label for="yourRole" class="form-label">Role</label>
-                                            <select name="role" id="yourRole" class="form-control">
-                                                <option value="">Pilih Role</option>
-                                                <?php foreach ($rowroles as $role): ?>
-                                                    <option value="<?php echo $role['id'] ?>"><?php echo $role['name'] ?></option>
-                                                <?php endforeach ?>
-                                                 <option value="1">Lainnya</option>
-                                                <!-- <option value="1">Instruktur</option>
-                                                    <option value="2">Siswa</option>
-                                                    <option value="3">Lainnya</option> -->
 
-                                            </select>
-                                            <div class="invalid-feedback">Please enter your password!</div>
-                                        </div>
 
+                                        
                                         <div class="col-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">

@@ -1,5 +1,5 @@
 <?php 
-$query = mysqli_query($config, "SELECT * FROM users WHERE deleted_at = 0 ORDER BY id DESC");
+$query = mysqli_query($config, "SELECT * FROM users ORDER BY id DESC");
 $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 ?>
 
@@ -31,6 +31,7 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                 <td><?php echo $row['name'] ?></td>
                                 <td><?php echo $row['email'] ?></td>                             
                                 <td>
+                                    <a  href="?page=tambah-user&add-user-role=<?php echo $row['id']?>" class="btn btn-success">Add User Role</a>
                                     <a  href="?page=tambah-user&edit=<?php echo $row['id']?>" class="btn btn-primary">edit</a>
                                     <a onclick="return confirm('Are You Sure Wanna Delete this Data??')" href="?page=tambah-user&delete=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a>
                                 </td>

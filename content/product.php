@@ -1,5 +1,8 @@
 <?php
-$query = mysqli_query($config, "SELECT * FROM instructors WHERE deleted_at = 0 ORDER BY id DESC");
+$query = mysqli_query($config, "SELECT products.*, categories.name as category_name 
+FROM products
+LEFT JOIN categories ON categories.id = products.id_category
+ORDER BY id DESC");
 $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
 ?>
 
@@ -9,9 +12,9 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Data Instructor</h5>
+                <h5 class="card-title">Data Product</h5>
                 <div class="mb-3" align="right">
-                    <a href="?page=tambah-instructor" class="btn btn-primary">Add Instructor</a>
+                    <a href="?page=tambah-product" class="btn btn-primary">Add Product</a>
                 </div>
 
                 <div class="table-responsive">
@@ -19,10 +22,12 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Full Name</th>
-                                <th>Gender</th>
-                                <th>Education</th>
-                                <th>Phone</th>
+                                <th>Category</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Description</th>
+                                <th></th>
 
                                 <th></th>
                             </tr>
@@ -31,14 +36,15 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                             <?php foreach ($rows as $key => $row): ?>
                                 <tr>
                                     <td><?php echo $key += 1; ?></td>
+                                    <td><?php echo $row['category_name'] ?></td>
                                     <td><?php echo $row['name'] ?></td>
-                                    <td><?php echo $row['gender'] == 1 ? 'Laki-laki' : 'Perempuan' ?></td>
-                                    <td><?php echo $row['education'] ?></td>
-                                    <td><?php echo $row['phone'] ?></td>
+                                    <td><?php echo $row['price'] ?></td>
+                                    <td><?php echo $row['qty'] ?></td>
+                                    <td><?php echo $row['description'] ?></td>
 
                                     <td>
-                                        <a href="?page=tambah-instructor-major&id=<?php echo $row['id'] ?>" class="btn btn-warning">Add Major</a>
-                                        <a href="?page=tambah-instructor&edit=<?php echo $row['id'] ?>" class="btn btn-primary">edit</a>
+                                        <a href="?page=tambah-product&id=<?php echo $row['id'] ?>" class="btn btn-warning">Add Produk</a>
+                                        <a href="?page=tambah-product&edit=<?php echo $row['id'] ?>" class="btn btn-primary">edit</a>
                                         <a onclick="return confirm('Are You Sure Wanna Delete this Data??')" href="?page=tambah-instructor&delete=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a>
                                         
                                     </td>
