@@ -1,10 +1,11 @@
 <?php
-$id_roles = isset($_SESSION['ID_ROLE']) ? $_SESSION['ID_ROLE'] : '';
+$id_user = isset($_SESSION['ID_USER']) ? $_SESSION['ID_USER'] : '';
 $querymainmenu = mysqli_query($config, "SELECT DISTINCT menus.*  FROM menus
 JOIN menu_roles ON menus.id = menu_roles.id_menus
-JOIN roles ON roles.id = menu_roles.id_roles
-WHERE menu_roles.id_roles = '$id_roles' AND
-parent_id = 0 OR parent_id=''");
+JOIN user_roles ON user_roles.id_role = menu_roles.id_roles
+WHERE user_roles.id_user = '$id_user'
+AND parent_id = 0 OR parent_id='' ORDER BY urutan ASC");
+
 $rowmainmenu = mysqli_fetch_all($querymainmenu, MYSQLI_ASSOC);
 
 ?>
@@ -26,9 +27,9 @@ $rowmainmenu = mysqli_fetch_all($querymainmenu, MYSQLI_ASSOC);
             $id_menu = $mainmenu['id'];
             $querysubmenu = mysqli_query($config, "SELECT DISTINCT menus.* FROM menus 
             JOIN menu_roles ON menus.id = menu_roles.id_menus
-            JOIN roles ON roles.id = menu_roles.id_roles
-            WHERE menu_roles.id_roles = '$id_roles' AND
-            parent_id = '$id_menu' ORDER BY urutan ASC ");
+            JOIN user_roles ON user_roles.id_role = menu_roles.id_roles
+            WHERE user_roles.id_user = '$id_user' AND
+            parent_id = '$id_menu' ORDER BY urutan ASC");
             // $rowsubmenu = mysqli_fetch_all($querysubmenu, MYSQLI_ASSOC);
             ?>
 
