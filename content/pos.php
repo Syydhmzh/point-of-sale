@@ -3,6 +3,16 @@ $querytransaction = mysqli_query($config, "SELECT users.name, transactions.* FRO
 LEFT JOIN users ON users.id = transactions.id_user
 ORDER BY id DESC");
 $rowtransaction = mysqli_fetch_all($querytransaction, MYSQLI_ASSOC);
+
+if (isset($_GET['delete'])) {
+    $iddel = $_GET['delete'];
+    $querydelete = mysqli_query($config, "DELETE FROM transactions WHERE id = '$iddel'");
+    if ($querydelete) {
+        header("Location:?page=pos");
+        exit;
+    }
+}
+
 ?>
 
 
@@ -36,8 +46,8 @@ $rowtransaction = mysqli_fetch_all($querytransaction, MYSQLI_ASSOC);
                                     <td><?php echo "Rp." . $row['sub_total'] ?></td>
 
                                     <td>
-                                        <a href="?page=tambah-pos&print=<?php echo $row['id'] ?>" class="btn btn-primary">Print</a>
-                                        <a onclick="return confirm('Are You Sure Wanna Delete this Data??')" href="?page=tambah-pos&delete=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a>
+                                        <a href="?page=print-pos&print=<?php echo $row['id'] ?>" class="btn btn-primary">Print</a>
+                                        <a onclick="return confirm('Are You Sure Wanna Delete this Data??')" href="?page=pos&delete=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a>
                                     </td>
                                 </tr>
 
